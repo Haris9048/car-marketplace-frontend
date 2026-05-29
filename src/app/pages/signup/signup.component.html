@@ -1,0 +1,30 @@
+<div class="flex justify-center mt-20">
+  <div class="bg-white p-6 shadow rounded w-80">
+
+    <h2 class="text-xl mb-4 text-center">Signup</h2>
+
+    <input [(ngModel)]="name"
+           placeholder="Name"
+           class="w-full border p-2 mb-3 rounded">
+
+    <input [(ngModel)]="email"
+           placeholder="Email"
+           class="w-full border p-2 mb-3 rounded">
+
+    <input [(ngModel)]="password"
+           type="password"
+           placeholder="Password"
+           class="w-full border p-2 mb-3 rounded">
+
+    <button (click)="signup()"
+            class="w-full bg-black text-white p-2 rounded">
+      Signup
+    </button>
+
+    <p class="mt-3 text-sm text-center">
+      Already have an account?
+      <a routerLink="/login" class="text-blue-500">Login</a>
+    </p>
+
+  </div>
+</div>

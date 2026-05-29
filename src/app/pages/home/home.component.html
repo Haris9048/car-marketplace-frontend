@@ -1,0 +1,49 @@
+<div class="min-h-screen bg-gray-100 p-6">
+
+  <!-- Header -->
+  <div class="max-w-6xl mx-auto flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Car Marketplace</h1>
+    <a routerLink="/add"
+       class="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
+      + Add Car
+    </a>
+  </div>
+
+  <!-- Cards -->
+  <div class="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <div *ngFor="let car of cars"
+         class="bg-white p-5 rounded-xl shadow hover:shadow-xl transition flex flex-col justify-between">
+
+      <!-- Car Info -->
+      <div>
+        <h3 class="text-lg font-semibold">{{car.title}}</h3>
+
+        <p class="text-green-600 text-xl font-bold mt-2">
+          ₹{{car.price}}
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="mt-4 space-y-2">
+
+       <!--- <button
+          class="w-full bg-gray-200 py-2 rounded hover:bg-gray-300 transition">
+          View Details
+        </button>   -->
+
+       
+        <button 
+          *ngIf="currentUser?._id === car.userId"
+          (click)="deleteCar(car._id)"
+          class="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 transition">
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
