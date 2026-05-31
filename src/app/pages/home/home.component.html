@@ -27,11 +27,11 @@
       <!-- Actions -->
       <div class="mt-4 space-y-2">
 
-       <!--- <button
-          class="w-full bg-gray-200 py-2 rounded hover:bg-gray-300 transition">
-          View Details
-        </button>   -->
-
+        <a
+  [routerLink]="['/car', car._id]"
+  class="block text-center w-full bg-gray-200 py-2 rounded hover:bg-gray-300 transition">
+  View Details
+</a>
        
         <button 
           *ngIf="currentUser?._id === car.userId"

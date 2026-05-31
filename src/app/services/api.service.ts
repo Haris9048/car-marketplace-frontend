@@ -30,6 +30,10 @@ export class ApiService {
     return this.http.get(`${this.baseUrl}/cars`);
   }
 
+  getCar(id: string) {
+  return this.http.get(`${this.baseUrl}/cars/${id}`);
+}
+
   addCar(data: any) {
     return this.http.post(`${this.baseUrl}/cars`, data, this.getHeaders());
   }

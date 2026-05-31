@@ -14,6 +14,13 @@ export class AddCarComponent implements OnInit {
 
   title = '';
   price: number = 0;
+  description = '';
+  brand = '';
+  model ='';
+  year: number = 0;
+  fuelType ='';
+  imageUrl='';
+
 
   constructor(private api: ApiService, private router: Router) {}
 
@@ -29,7 +36,14 @@ export class AddCarComponent implements OnInit {
   addCar() {
   this.api.addCar({
     title: this.title,
-    price: this.price
+    price: this.price,
+    description: this.description,
+  brand: this.brand,
+  model: this.model,
+  year: this.year,
+  fuelType: this.fuelType,
+  imageUrl: this.imageUrl
+    
   }).subscribe(() => {
     alert("Car added");
     this.router.navigate(['/']);

@@ -1,0 +1,52 @@
+<div *ngIf="car" class="min-h-screen bg-gray-100 p-6">
+
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow p-6">
+
+    <img
+      [src]="car.imageUrl"
+      alt="Car Image"
+  
+      class="w-full h-80 object-cover rounded-lg mb-6">
+      <p>{{ car.imageUrl }}</p>
+
+    <h1 class="text-3xl font-bold">
+      {{ car.title }}
+    </h1>
+
+    <p class="text-green-600 text-2xl font-bold mt-2">
+      ₹{{ car.price }}
+    </p>
+
+    <div class="grid grid-cols-2 gap-4 mt-6">
+
+      <div>
+        <strong>Brand:</strong> {{ car.brand }}
+      </div>
+
+      <div>
+        <strong>Model:</strong> {{ car.model }}
+      </div>
+
+      <div>
+        <strong>Year:</strong> {{ car.year }}
+      </div>
+
+      <div>
+        <strong>Fuel Type:</strong> {{ car.fuelType }}
+      </div>
+
+    </div>
+
+    <div class="mt-6">
+      <h2 class="text-xl font-semibold mb-2">
+        Description
+      </h2>
+
+      <p>
+        {{ car.description }}
+      </p>
+    </div>
+
+  </div>
+
+</div>

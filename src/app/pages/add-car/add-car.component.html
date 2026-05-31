@@ -11,6 +11,37 @@
            type="number"
            placeholder="Price"
            class="w-full border p-2 mb-3 rounded">
+           <textarea
+  [(ngModel)]="description"
+  placeholder="Description"
+  class="w-full border p-2 mb-3 rounded">
+</textarea>
+
+<input
+  [(ngModel)]="brand"
+  placeholder="Brand"
+  class="w-full border p-2 mb-3 rounded">
+
+  <input
+  [(ngModel)]="model"
+  placeholder="Model"
+  class="w-full border p-2 mb-3 rounded">
+
+  <input
+  [(ngModel)]="year"
+  type="number"
+  placeholder="Year"
+  class="w-full border p-2 mb-3 rounded">
+
+  <input
+  [(ngModel)]="fuelType"
+  placeholder="Fuel Type"
+  class="w-full border p-2 mb-3 rounded">
+
+  <input
+  [(ngModel)]="imageUrl"
+  placeholder="Image URL"
+  class="w-full border p-2 mb-3 rounded">
 
     <button (click)="addCar()"
             class="w-full bg-black text-white p-2 rounded">
