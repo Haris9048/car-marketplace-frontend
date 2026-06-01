@@ -11,6 +11,7 @@ export class ApiService {
   // 🔐 headers
   getHeaders() {
     const token = localStorage.getItem("token");
+
     return {
       headers: {
         Authorization: `Bearer ${token}`
@@ -19,26 +20,51 @@ export class ApiService {
   }
 
   signup(data: any) {
-    return this.http.post(`${this.baseUrl}/signup`, data);
+    return this.http.post(
+      `${this.baseUrl}/signup`,
+      data
+    );
   }
 
   login(data: any) {
-    return this.http.post(`${this.baseUrl}/login`, data);
+    return this.http.post(
+      `${this.baseUrl}/login`,
+      data
+    );
   }
 
   getCars() {
-    return this.http.get(`${this.baseUrl}/cars`);
+    return this.http.get(
+      `${this.baseUrl}/cars`
+    );
   }
 
   getCar(id: string) {
-  return this.http.get(`${this.baseUrl}/cars/${id}`);
-}
+    return this.http.get(
+      `${this.baseUrl}/cars/${id}`
+    );
+  }
+
+  uploadImage(formData: FormData) {
+    return this.http.post(
+      `${this.baseUrl}/upload`,
+      formData
+    );
+  }
 
   addCar(data: any) {
-    return this.http.post(`${this.baseUrl}/cars`, data, this.getHeaders());
+    return this.http.post(
+      `${this.baseUrl}/cars`,
+      data,
+      this.getHeaders()
+    );
   }
 
   deleteCar(id: string) {
-    return this.http.delete(`${this.baseUrl}/cars/${id}`, this.getHeaders());
+    return this.http.delete(
+      `${this.baseUrl}/cars/${id}`,
+      this.getHeaders()
+    );
   }
+
 }

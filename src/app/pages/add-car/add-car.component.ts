@@ -20,6 +20,11 @@ export class AddCarComponent implements OnInit {
   year: number = 0;
   fuelType ='';
   imageUrl='';
+  selectedFile: File | null = null;
+
+  onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0];
+}
 
 
   constructor(private api: ApiService, private router: Router) {}
@@ -33,20 +38,40 @@ export class AddCarComponent implements OnInit {
     }
   }
 
-  addCar() {
-  this.api.addCar({
-    title: this.title,
-    price: this.price,
-    description: this.description,
-  brand: this.brand,
-  model: this.model,
-  year: this.year,
-  fuelType: this.fuelType,
-  imageUrl: this.imageUrl
-    
-  }).subscribe(() => {
-    alert("Car added");
-    this.router.navigate(['/']);
-  });
-}
-}
+ addCar() {
+
+  if (!this.selectedFile) {
+    alert("Please select an image");
+    return;
+  }
+
+  const formData = new FormData();
+
+  formData.append(
+    "image",
+    this.selectedFile
+  );
+
+  this.api.uploadImage(formData)
+    .subscribe((uploadRes: any) => {
+
+      this.api.addCar({
+
+        title: this.title,
+        price: this.price,
+        description: this.description,
+        brand: this.brand,
+        model: this.model,
+        year: this.year,
+        fuelType: this.fuelType,
+        imageUrl: uploadRes.imageUrl
+
+      }).subscribe(() => {
+
+        alert("Car added");
+        this.router.navigate(['/']);
+
+      });
+
+    });
+  }}

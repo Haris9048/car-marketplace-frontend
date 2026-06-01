@@ -39,8 +39,8 @@
   class="w-full border p-2 mb-3 rounded">
 
   <input
-  [(ngModel)]="imageUrl"
-  placeholder="Image URL"
+  type="file"
+  (change)="onFileSelected($event)"
   class="w-full border p-2 mb-3 rounded">
 
     <button (click)="addCar()"
