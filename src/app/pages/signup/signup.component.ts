@@ -15,10 +15,29 @@ export class SignupComponent {
   name = '';
   email = '';
   password = '';
+  errorMessage = '';
 
   constructor(private api: ApiService, private router: Router) {}
 
   signup() {
+
+  this.errorMessage = '';
+
+  if (this.name.trim() === '') {
+    this.errorMessage = 'Name is required';
+    return;
+  }
+
+  if (!this.email.includes('@')) {
+    this.errorMessage = 'Enter a valid email';
+    return;
+  }
+
+  if (this.password.length < 8) {
+    this.errorMessage = 'Password must be at least 8 characters';
+    return;
+  }
+
   this.api.signup({
     name: this.name,
     email: this.email,
@@ -29,7 +48,8 @@ export class SignupComponent {
       this.router.navigate(['/login']);
     },
     error: (err) => {
-      alert(err.error.message); // 👈 show backend message
+      this.errorMessage = err.error.message;
     }
   });
+
 }}

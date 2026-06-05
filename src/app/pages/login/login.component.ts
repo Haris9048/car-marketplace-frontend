@@ -13,10 +13,30 @@ export class LoginComponent {
 
   email = '';
   password = '';
+  errorMessage = '';
 
   constructor(private api: ApiService, private router: Router) {}
 
   login() {
+    console.log("Login clicked");
+
+    if (this.email.trim() === '') {
+  this.errorMessage = 'Email is required';
+  return;
+}
+
+if (!this.email.includes('@')) {
+  this.errorMessage = 'Invalid email';
+  return;
+}
+
+
+if (this.password.length < 8) {
+  this.errorMessage = 'Password must be at least 8 characters';
+  return;
+}
+
+ console.log("Validation passed");
   this.api.login({ email: this.email, password: this.password })
     .subscribe({
       next: (res: any) => {
