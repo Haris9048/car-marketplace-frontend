@@ -25,14 +25,15 @@ export class LoginComponent {
   return;
 }
 
-if (!this.email.includes('@')) {
-  this.errorMessage = 'Invalid email';
+if (this.password.trim() === '') {
+  this.errorMessage = 'Password is required';
   return;
 }
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-if (this.password.length < 8) {
-  this.errorMessage = 'Password must be at least 8 characters';
+if (!emailRegex.test(this.email)) {
+  this.errorMessage = 'Invalid email format';
   return;
 }
 
@@ -45,7 +46,7 @@ if (this.password.length < 8) {
         window.location.reload();
       },
       error: (err) => {
-        alert(err.error.message);
+        this.errorMessage = 'Invalid email or password';
       }
     });
 }

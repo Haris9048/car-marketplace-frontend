@@ -27,12 +27,12 @@ export class SignupComponent {
     this.errorMessage = 'Name is required';
     return;
   }
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!this.email.includes('@')) {
-    this.errorMessage = 'Enter a valid email';
-    return;
-  }
-
+if (!emailRegex.test(this.email)) {
+  this.errorMessage = 'Enter a valid email';
+  return;
+}
   if (this.password.length < 8) {
     this.errorMessage = 'Password must be at least 8 characters';
     return;
