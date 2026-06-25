@@ -1,77 +1,158 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-car',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule
+  ],
   templateUrl: './add-car.component.html'
 })
 export class AddCarComponent implements OnInit {
 
-  title = '';
-  price: number = 0;
-  description = '';
-  brand = '';
-  model ='';
-  year: number = 0;
-  fuelType ='';
-  imageUrl='';
   selectedFile: File | null = null;
 
-  onFileSelected(event: any) {
-  this.selectedFile = event.target.files[0];
-}
+  errorMessage = '';
+  successMessage = '';
 
+  carForm;
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+
+    this.carForm = this.fb.group({
+
+      title: ['', Validators.required],
+
+      price: [
+        '',
+        [
+          Validators.required,
+          Validators.min(1)
+        ]
+      ],
+
+      description: [''],
+
+      brand: ['', Validators.required],
+
+      model: ['', Validators.required],
+
+      year: [
+        '',
+        Validators.required
+      ],
+
+      fuelType: [
+        '',
+        Validators.required
+      ]
+
+    });
+
+  }
 
   ngOnInit() {
-    const user = localStorage.getItem("user");
 
-    // 🔐 protect route
+    const user = localStorage.getItem('user');
+
     if (!user) {
       this.router.navigate(['/login']);
     }
+
   }
 
- addCar() {
+  onFileSelected(event: any) {
 
-  if (!this.selectedFile) {
-    alert("Please select an image");
-    return;
+    this.selectedFile =
+      event.target.files[0];
+
   }
 
-  const formData = new FormData();
+  addCar() {
 
-  formData.append(
-    "image",
-    this.selectedFile
-  );
+    this.errorMessage = '';
+    this.successMessage = '';
 
-  this.api.uploadImage(formData)
-    .subscribe((uploadRes: any) => {
+    if (this.carForm.invalid) {
 
-      this.api.addCar({
+      this.carForm.markAllAsTouched();
 
-        title: this.title,
-        price: this.price,
-        description: this.description,
-        brand: this.brand,
-        model: this.model,
-        year: this.year,
-        fuelType: this.fuelType,
-        imageUrl: uploadRes.imageUrl
+      return;
 
-      }).subscribe(() => {
+    }
 
-        alert("Car added");
-        this.router.navigate(['/']);
+    if (!this.selectedFile) {
+
+      this.errorMessage =
+        'Image is required';
+
+      return;
+
+    }
+
+    const formData = new FormData();
+
+    formData.append(
+      'image',
+      this.selectedFile
+    );
+
+    this.api.uploadImage(formData)
+      .subscribe({
+
+        next: (uploadRes: any) => {
+
+          this.api.addCar({
+
+            ...this.carForm.value,
+
+            imageUrl:
+              uploadRes.imageUrl
+
+          }).subscribe({
+
+            next: () => {
+
+              this.successMessage =
+                'Car added successfully';
+
+              this.router.navigate(['/']);
+
+            },
+
+            error: () => {
+
+              this.errorMessage =
+                'Failed to add car';
+
+            }
+
+          });
+
+        },
+
+        error: () => {
+
+          this.errorMessage =
+            'Image upload failed';
+
+        }
 
       });
 
-    });
-  }}
+  }
+
+}

@@ -1,52 +1,170 @@
 <div class="flex justify-center mt-20">
+
   <div class="bg-white p-6 shadow rounded w-96">
 
-    <h2 class="text-xl mb-4 text-center">Add Car</h2>
-
-    <input [(ngModel)]="title"
-           placeholder="Car Title"
-           class="w-full border p-2 mb-3 rounded">
-
-    <input [(ngModel)]="price"
-           type="number"
-           placeholder="Price"
-           class="w-full border p-2 mb-3 rounded">
-           <textarea
-  [(ngModel)]="description"
-  placeholder="Description"
-  class="w-full border p-2 mb-3 rounded">
-</textarea>
-
-<input
-  [(ngModel)]="brand"
-  placeholder="Brand"
-  class="w-full border p-2 mb-3 rounded">
-
-  <input
-  [(ngModel)]="model"
-  placeholder="Model"
-  class="w-full border p-2 mb-3 rounded">
-
-  <input
-  [(ngModel)]="year"
-  type="number"
-  placeholder="Year"
-  class="w-full border p-2 mb-3 rounded">
-
-  <input
-  [(ngModel)]="fuelType"
-  placeholder="Fuel Type"
-  class="w-full border p-2 mb-3 rounded">
-
-  <input
-  type="file"
-  (change)="onFileSelected($event)"
-  class="w-full border p-2 mb-3 rounded">
-
-    <button (click)="addCar()"
-            class="w-full bg-black text-white p-2 rounded">
+    <h2 class="text-xl mb-4 text-center">
       Add Car
-    </button>
+    </h2>
+
+    <form
+      [formGroup]="carForm"
+      (ngSubmit)="addCar()">
+
+      <!-- Title -->
+
+      <input
+        formControlName="title"
+        placeholder="Car Title *"
+        class="w-full border p-2 mb-1 rounded">
+
+      <p
+        *ngIf="
+          carForm.get('title')?.touched &&
+          carForm.get('title')?.invalid
+        "
+        class="text-red-500 text-sm mb-3">
+
+        Title is required
+
+      </p>
+
+      <!-- Price -->
+
+      <input
+        formControlName="price"
+        type="number"
+        placeholder="Price *"
+        class="w-full border p-2 mb-1 rounded">
+
+      <p
+        *ngIf="
+          carForm.get('price')?.touched &&
+          carForm.get('price')?.invalid
+        "
+        class="text-red-500 text-sm mb-3">
+
+        Enter a valid price
+
+      </p>
+
+      <!-- Description -->
+
+      <textarea
+        formControlName="description"
+        placeholder="Description (Optional)"
+        class="w-full border p-2 mb-3 rounded">
+      </textarea>
+
+      <!-- Brand -->
+
+      <input
+        formControlName="brand"
+        placeholder="Brand *"
+        class="w-full border p-2 mb-1 rounded">
+
+      <p
+        *ngIf="
+          carForm.get('brand')?.touched &&
+          carForm.get('brand')?.invalid
+        "
+        class="text-red-500 text-sm mb-3">
+
+        Brand is required
+
+      </p>
+
+      <!-- Model -->
+
+      <input
+        formControlName="model"
+        placeholder="Model *"
+        class="w-full border p-2 mb-1 rounded">
+
+      <p
+        *ngIf="
+          carForm.get('model')?.touched &&
+          carForm.get('model')?.invalid
+        "
+        class="text-red-500 text-sm mb-3">
+
+        Model is required
+
+      </p>
+
+      <!-- Year -->
+
+      <input
+        formControlName="year"
+        type="number"
+        placeholder="Year *"
+        class="w-full border p-2 mb-1 rounded">
+
+      <p
+        *ngIf="
+          carForm.get('year')?.touched &&
+          carForm.get('year')?.invalid
+        "
+        class="text-red-500 text-sm mb-3">
+
+        Year is required
+
+      </p>
+
+      <!-- Fuel Type -->
+
+      <input
+        formControlName="fuelType"
+        placeholder="Fuel Type *"
+        class="w-full border p-2 mb-1 rounded">
+
+      <p
+        *ngIf="
+          carForm.get('fuelType')?.touched &&
+          carForm.get('fuelType')?.invalid
+        "
+        class="text-red-500 text-sm mb-3">
+
+        Fuel Type is required
+
+      </p>
+
+      <!-- Image -->
+
+      <input
+        type="file"
+        (change)="onFileSelected($event)"
+        class="w-full border p-2 mb-3 rounded">
+
+      <!-- Error -->
+
+      <p
+        *ngIf="errorMessage"
+        class="text-red-500 text-sm mb-3">
+
+        {{ errorMessage }}
+
+      </p>
+
+      <!-- Success -->
+
+      <p
+        *ngIf="successMessage"
+        class="text-green-600 text-sm mb-3">
+
+        {{ successMessage }}
+
+      </p>
+
+      <button
+        type="submit"
+        class="w-full bg-black text-white p-2 rounded">
+
+        Add Car
+
+      </button>
+
+    </form>
 
   </div>
+
 </div>
